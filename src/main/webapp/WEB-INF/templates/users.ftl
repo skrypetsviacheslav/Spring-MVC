@@ -3,10 +3,14 @@
     <title>Users</title>
 </head>
 <body>
-    <ul>
-        <#list users as user>
-            <li>${user.name} ${user.surname} ${user.email}</li>
-        </#list>
-    </ul>
+    <#list users >
+        <ul>
+            <#items as user>
+                <li>${user.name} ${user.surname} ${user.email}</li>
+            </#items>
+        </ul>
+    <#else >
+        <p>No users</p>
+    </#list>
 </body>
 </html>

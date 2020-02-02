@@ -3,19 +3,19 @@ package com.slava.controller;
 import com.slava.model.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Controller
 public class MainController {
+
+    private static Collection<User> users = new ArrayList<>();
+
     @GetMapping("/{name}")
-    public String index(
-            @PathVariable String name,
-            Model model) {
+    public String index(@PathVariable String name,
+                        Model model) {
         model.addAttribute("msg", "Hello, " + name);
         return "/index";
     }
@@ -29,11 +29,26 @@ public class MainController {
 
     @GetMapping("/users")
     public String getUsers(Model model) {
-        Collection<User> users = Arrays.asList(
-                new User("John", "Smith", "js@mail.com"),
-                new User("Mike", "Johnson", "mj@mail.com")
-        );
         model.addAttribute("users", users);
         return "/users";
     }
+
+    @GetMapping("/users/new")
+    public String getSignUp() {
+        return "/sign_up";
+    }
+
+    @PostMapping("/users/new")
+    public String signUp(
+//            @RequestParam("name") String name,
+//            @RequestParam("surname") String surname,
+//            @RequestParam("email") String email
+            @ModelAttribute User user
+    ) {
+//        users.add(new User(name, surname, email));
+        users.add(user);
+
+        return "redirect:/users";
+    }
+
 }
