@@ -1,19 +1,27 @@
+<#assign sf=JspTaglibs["http://www.springframework.org/tags/form"]>
+
 <html>
 <head>
     <title>Sign Up</title>
 </head>
 <body>
-    <form action="/users/new" method="post">
-        <label>
-            <input name="name" type="text" placeholder="name">
-        </label>
-        <label>
-            <input name="surname" type="text" placeholder="surname">
-        </label>
-        <label>
-            <input name="email" type="email" placeholder="email">
-        </label>
+    <@sf.form action="/users/new" method="post" modelAttribute="user">
+        <div>
+            <@sf.label path="name">Name</@sf.label>
+            <@sf.input path="name"/>
+            <@sf.errors path="name"/>
+        </div>
+        <div>
+            <@sf.label path="surname">Surname</@sf.label>
+            <@sf.input path="surname"/>
+            <@sf.errors path="surname"/>
+        </div>
+        <div>
+            <@sf.label path="email">Email</@sf.label>
+            <@sf.input path="email"/>
+            <@sf.errors path="email"/>
+        </div>
         <input type="submit">
-    </form>
+    </@sf.form>
 </body>
 </html>

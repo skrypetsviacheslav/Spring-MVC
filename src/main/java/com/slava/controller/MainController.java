@@ -3,8 +3,10 @@ package com.slava.controller;
 import com.slava.model.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -20,7 +22,6 @@ public class MainController {
         return "/index";
     }
 
-
     @GetMapping("/raw")
     @ResponseBody
     public String raw() {
@@ -34,20 +35,20 @@ public class MainController {
     }
 
     @GetMapping("/users/new")
-    public String getSignUp() {
+    public String getSignUp(Model model) {
+        model.addAttribute("user", new User());
         return "/sign_up";
     }
 
     @PostMapping("/users/new")
     public String signUp(
-//            @RequestParam("name") String name,
-//            @RequestParam("surname") String surname,
-//            @RequestParam("email") String email
-            @ModelAttribute User user
-    ) {
-//        users.add(new User(name, surname, email));
-        users.add(user);
+            @ModelAttribute @Valid User user,
+            BindingResult result) {
+        if (result.hasErrors()) {
+            return "/sign_up";
+        }
 
+        users.add(user);
         return "redirect:/users";
     }
 
