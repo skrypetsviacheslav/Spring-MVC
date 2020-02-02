@@ -11,6 +11,6 @@
     <title>Home</title>
 </head>
 <body>
-    Hello From JSP
+    ${msg}
 </body>
 </html>
