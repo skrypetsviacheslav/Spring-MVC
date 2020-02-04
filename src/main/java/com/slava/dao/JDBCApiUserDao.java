@@ -58,4 +58,36 @@ public class JDBCApiUserDao implements UserDao {
 
         return users;
     }
+
+    @Override
+    public User getByEmail(String email) {
+        try {
+            PreparedStatement ps = conn.prepareStatement("select  * from  users where email = ?");
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                User u = new User();
+                u.setName(rs.getString(1));
+                u.setSurname(rs.getString(2));
+                u.setEmail(rs.getString(3));
+                return u;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
+    @Override
+    public void create(User user) {
+        try {
+            PreparedStatement ps = conn.prepareStatement("insert into users values (?,?,?)");
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getSurname());
+            ps.setString(3, user.getEmail());
+            ps.execute();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
