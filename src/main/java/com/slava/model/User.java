@@ -1,9 +1,16 @@
 package com.slava.model;
 
+import lombok.*;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Builder
 public class User {
     @NotBlank(message = "Name is required")
     private String name;
@@ -11,37 +18,4 @@ public class User {
     private String surname;
     @Email
     private String email;
-
-    public User() {
-    }
-
-    public User(String name, String surname, String email) {
-        this.name = name;
-        this.surname = surname;
-        this.email = email;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getSurname() {
-        return surname;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
 }
