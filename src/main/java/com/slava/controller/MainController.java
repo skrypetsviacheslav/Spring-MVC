@@ -1,7 +1,7 @@
 package com.slava.controller;
 
-import com.slava.dao.UserDao;
 import com.slava.model.User;
+import com.slava.service.UserService;
 import com.slava.util.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,18 +13,16 @@ import javax.validation.Valid;
 
 @Controller
 public class MainController {
-
-    private final UserDao userDao;
+    private final UserService userService;
     private final UserValidator userValidator;
 
     @Autowired
-    public MainController(UserDao userDao, UserValidator userValidator) {
-        this.userDao = userDao;
+    public MainController(UserService userService, UserValidator userValidator) {
+        this.userService = userService;
         this.userValidator = userValidator;
     }
 
     @GetMapping("/{name}")
-
     public String index(@PathVariable String name,
                         Model model) {
         model.addAttribute("msg", "Hello, " + name);
@@ -39,7 +37,7 @@ public class MainController {
 
     @GetMapping("/users")
     public String getUsers(Model model) {
-        model.addAttribute("users", userDao.getAll());
+        model.addAttribute("users", userService.getAll());
         return "/users";
     }
 
@@ -57,7 +55,7 @@ public class MainController {
         if (result.hasErrors()) {
             return "/sign_up";
         }
-        userDao.create(user);
+        userService.create(user);
         return "redirect:/users";
     }
 
