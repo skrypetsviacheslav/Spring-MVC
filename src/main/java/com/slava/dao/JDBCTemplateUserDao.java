@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-@Primary
 public class JDBCTemplateUserDao implements UserDao {
     public final BeanPropertyRowMapper<User> ROW_MAPPER =
             new BeanPropertyRowMapper<>(User.class);
@@ -26,13 +25,6 @@ public class JDBCTemplateUserDao implements UserDao {
         return jdbcTemplate.query(
                 "select * from  users",
                 ROW_MAPPER);
-//        return jdbcTemplate.query("select * from users", (rs, rowNum) -> {
-//            User u = new User();
-//            u.setName(rs.getString(1));
-//            u.setSurname(rs.getString(2));
-//            u.setEmail(rs.getString(3));
-//            return u;
-//        });
     }
 
     @Override
