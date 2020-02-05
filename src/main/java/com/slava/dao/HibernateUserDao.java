@@ -11,8 +11,6 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-@Primary
-
 public class HibernateUserDao implements UserDao {
 
     private final SessionFactory sessionFactory;
