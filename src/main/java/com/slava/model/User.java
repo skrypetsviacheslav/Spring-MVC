@@ -25,4 +25,6 @@ public class User {
     @NotBlank(message = "Email is required")
     @Email
     private String email;
+    @Size(min = 7, max = 20, message = "From 7 to 20 symbols")
+    private String password;
 }
