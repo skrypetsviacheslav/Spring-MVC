@@ -1,7 +1,12 @@
 package com.slava.configuration;
 
+import com.sun.deploy.util.ArrayUtil;
 import org.springframework.core.annotation.Order;
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
+import javax.servlet.Filter;
+import java.util.Arrays;
 
 @Order(1)
 public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
@@ -21,5 +26,11 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
     @Override
     protected String[] getServletMappings() {
         return new String[]{"/"};
+    }
+
+    @Override
+    protected Filter[] getServletFilters() {
+        return new Filter[]{
+                new CharacterEncodingFilter("UTF-8", true)};
     }
 }
