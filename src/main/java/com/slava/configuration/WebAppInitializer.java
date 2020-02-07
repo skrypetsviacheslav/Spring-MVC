@@ -10,8 +10,7 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
         return new Class<?>[]{
                 CoreConfig.class,
                 PersistenceConfig.class,
-                SecurityConfig.class,
-                WebConfig.class};
+                SecurityConfig.class};
     }
 
     @Override

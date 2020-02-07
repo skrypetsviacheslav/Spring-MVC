@@ -14,6 +14,7 @@ import java.util.Properties;
 @Configuration
 @EnableWebMvc
 @ComponentScan("com.slava")
+@ComponentScan("com.slava.controller")
 public class WebConfig implements WebMvcConfigurer {
     @Bean
     public FreeMarkerViewResolver viewResolver() {

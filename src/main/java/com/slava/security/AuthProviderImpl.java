@@ -10,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.Collections;
@@ -17,12 +18,10 @@ import java.util.List;
 
 @Component
 public class AuthProviderImpl implements AuthenticationProvider {
-
-    private final UserService userService;
-
-    public AuthProviderImpl(UserService userService) {
-        this.userService = userService;
-    }
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
@@ -33,7 +32,7 @@ public class AuthProviderImpl implements AuthenticationProvider {
         }
         String password = authentication.getCredentials().toString();
 
-        if (!password.equals(user.getPassword())) {
+        if (passwordEncoder.matches(password, user.getPassword())) {
             throw new BadCredentialsException("Bad credentials");
         }
         List<GrantedAuthority> authorities = Collections.emptyList();

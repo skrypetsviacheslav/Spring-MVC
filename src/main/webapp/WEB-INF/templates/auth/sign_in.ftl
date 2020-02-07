@@ -11,6 +11,9 @@
         Password: <input name="password" type="password">
     </div>
     <input type="submit">
+    <#if error??>
+        <p>Bad credential</p>
+    </#if>
 </form>
 </body>
 </html>

@@ -10,11 +10,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class MainController {
-    private final UserService userService;
-
     @Autowired
-    public MainController(UserService userService) {
-        this.userService = userService;
+    private UserService userService;
+
+    @GetMapping("/")
+    public String home() {
+        return "redirect:/users";
     }
 
     @GetMapping("/{name}")

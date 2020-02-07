@@ -7,24 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @Controller
 public class AuthController {
-
-    private final UserService userService;
-    private final UserValidator userValidator;
-
     @Autowired
-    public AuthController(UserService userService, UserValidator userValidator) {
-        this.userService = userService;
-        this.userValidator = userValidator;
-    }
+    private UserService userService;
+    @Autowired
+    private UserValidator userValidator;
 
     @GetMapping("/sign_up")
     public String getSignUp(Model model) {
@@ -45,7 +37,11 @@ public class AuthController {
     }
 
     @RequestMapping("/login")
-    public String login() {
+    public String login(@RequestParam(name = "error", required = false) boolean error,
+                        Model model) {
+        if (Boolean.TRUE.equals(error)) {
+            model.addAttribute("error", true);
+        }
         return "auth/sign_in";
     }
 }
